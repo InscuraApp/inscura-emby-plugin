@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscura</title>
+</head>
+<body>
+  <div
+    id="InscuraConfigPage"
+    data-role="page"
+    class="page type-interior pluginConfigurationPage"
+    data-require="emby-input,emby-button,emby-checkbox,emby-select"
+    data-controller="__plugin/InscuraConfigurationPageJs">
+    <div data-role="content">
+      <div class="content-primary">
+        <form id="InscuraConfigForm">
+          <div class="verticalSection verticalSection-extrabottompadding">
+            <div class="sectionTitleContainer flex align-items-center">
+              <h2 class="sectionTitle">Inscura</h2>
+            </div>
+            <p id="txtIntro"></p>
+            <p id="txtTrailerNotice"></p>
+          </div>
+
+          <div class="selectContainer">
+            <label class="selectLabel" for="selectLanguage" id="labelSelectLanguage">Language</label>
+            <select is="emby-select" id="selectLanguage" class="emby-select-withcolor emby-select">
+              <option id="languageOptionEn" value="en">English</option>
+              <option id="languageOptionZh" value="zh-CN">简体中文</option>
+            </select>
+          </div>
+
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="txtApiBaseUrl" id="labelApiBaseUrl">Inscura API URL</label>
+            <input is="emby-input" type="url" id="txtApiBaseUrl" required />
+            <div class="fieldDescription" id="descApiBaseUrl"></div>
+          </div>
+
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="txtApiToken" id="labelApiToken">API Token</label>
+            <input is="emby-input" type="password" id="txtApiToken" />
+            <div class="fieldDescription" id="descApiToken"></div>
+          </div>
+
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="txtSearchLimit" id="labelSearchLimit">Search result limit</label>
+            <input is="emby-input" type="number" id="txtSearchLimit" min="1" max="50" step="1" />
+          </div>
+
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="txtRequestTimeoutSeconds" id="labelRequestTimeoutSeconds">Request timeout (seconds)</label>
+            <input is="emby-input" type="number" id="txtRequestTimeoutSeconds" min="3" max="120" step="1" />
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkEnableMetadataProvider" />
+              <span id="labelEnableMetadataProvider"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkEnableImageProvider" />
+              <span id="labelEnableImageProvider"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkEnableAutomaticImageImport" />
+              <span id="labelEnableAutomaticImageImport"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkEnablePersonProvider" />
+              <span id="labelEnablePersonProvider"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkEnableYouTubeTrailers" />
+              <span id="labelEnableYouTubeTrailers"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkIncludePreviewAsThumb" />
+              <span id="labelIncludePreviewAsThumb"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkIncludeGalleryBackdrops" />
+              <span id="labelIncludeGalleryBackdrops"></span>
+            </label>
+          </div>
+
+          <div class="checkboxContainer checkboxContainer-withDescription">
+            <label class="emby-checkbox-label">
+              <input is="emby-checkbox" type="checkbox" id="chkIncludeMediaStreams" />
+              <span id="labelIncludeMediaStreams"></span>
+            </label>
+          </div>
+
+          <div>
+            <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+              <span id="labelSave">Save</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

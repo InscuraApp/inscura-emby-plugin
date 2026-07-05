@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Read plugin version
+        id: version
+        run: |
+          VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Inscura.Emby.Plugin.csproj | head -n 1 | tr -d '[:space:]')
+          if [ -z "$VERSION" ]; then
+            echo "Unable to read plugin version from Inscura.Emby.Plugin.csproj" >&2
+            exit 1
+          fi
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build plugin
+        run: dotnet build Inscura.Emby.Plugin.csproj -c Release --nologo
+
+      - name: Build release archive
+        run: |
+          ARCHIVE_NAME="inscura-emby-plugin-${{ steps.version.outputs.value }}-build.${{ github.run_number }}.zip"
+          mkdir -p release
+          cp "bin/Release/net8.0/Emby.Plugin.Inscura.dll" "release/Emby.Plugin.Inscura.dll"
+          cd release
+          zip "../$ARCHIVE_NAME" "Emby.Plugin.Inscura.dll"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.value }}-build.${{ github.run_number }}
+          name: v${{ steps.version.outputs.value }} (build ${{ github.run_number }})
+          body: |
+            Automated release from commit ${{ github.sha }}.
+
+            ## Install
+
+            Download and extract the zip, then copy `Emby.Plugin.Inscura.dll` to your Emby Server plugins directory and restart Emby Server.
+          files: |
+            inscura-emby-plugin-${{ steps.version.outputs.value }}-build.${{ github.run_number }}.zip
+          generate_release_notes: true
